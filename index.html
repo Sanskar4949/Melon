@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MELON Shopping Site</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f5f5f7;
+            color: #333;
+        }
+
+        header {
+            background-color: #000;
+            color: #fff;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left {
+            font-size: 1.5rem;
+        }
+
+        .header-right {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .header-right input[type="text"] {
+            padding: 0.5rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .header-right button {
+            background-color: #000;
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        .header-right button:hover {
+            background-color: #555;
+        }
+
+        .account-panel {
+            position: fixed;
+            top: 0;
+            right: -30%;
+            width: 30%;
+            height: 100%;
+            background-color: #fff;
+            box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
+            overflow-y: auto;
+            transition: right 0.3s ease;
+            z-index: 1000;
+        }
+
+        .account-panel.open {
+            right: 0;
+        }
+
+        .account-panel header {
+            background-color: #333;
+            color: #fff;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .account-panel .content {
+            padding: 1rem;
+        }
+
+        .account-panel button.close-btn {
+            background-color: #000;
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            display: block;
+            margin: 1rem auto;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            padding: 1rem;
+            background-color: #333;
+            color: #fff;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+        }
+
+        nav a:hover {
+            text-decoration: underline;
+        }
+
+        .poster h1 {
+            font-size: 3rem;
+            color: #ffffff;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .products {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .product {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 1rem;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .product:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        @media (max-width: 768px) {
+            .poster h1 {
+                font-size: 2rem;
+                text-align: center;
+                padding: 0 1rem;
+            }
+        }
+
+        .product img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .product h3 {
+            margin: 1rem 0;
+            font-size: 1.5rem;
+        }
+
+        .product p {
+            margin: 0.5rem 0;
+            color: #555;
+        }
+
+        .product button {
+            background-color: #000;
+            color: #fff;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        .product button:hover {
+            background-color: #555;
+        }
+
+        footer {
+            background-color: #000;
+            color: #fff;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .hero {
+            position: relative;
+            height: 800px;
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .hero-img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            color: #fff;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+            padding: 3rem 1rem;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero-content h2 {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            font-weight: 400;
+        }
+
+        .hero-content button {
+            background-color: #fff;
+            color: #000;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .hero-content button:hover {
+            background-color: #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-left">MELON</div>
+        <div class="header-right">
+            <button onclick="toggleAccountPanel()">My Account</button>
+        </div>
+    </header>
+
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="cart.html">Cart</a>
+        <a href="checkout.html">Checkout</a>
+        <a href="about.html">About</a>
+    </nav>
+
+    <div class="hero">
+        <img src="maincenterpic.png" alt="Hero Background" class="hero-img">
+        <div class="hero-content">
+            <h1>Welcome to the LUXURY of Shopping</h1>
+            <h2>"One In A Melon"</h2>
+            <button onclick="window.location.href='explore.html'">Explore Now</button>
+    
+        </div>
+    </div>
+
+    <div class="container">
+        <section class="products">
+            <div class="product">
+                <img src="./blacktee.png" alt="Product 1">
+                <h3><a href="product-details.html?product=1" style="text-decoration: none; color: inherit;">Black Melon</a></h3>
+                <p>$19.99</p>
+                <button type="button">Add to Cart</button>
+            </div>
+            <div class="product">
+                <img src="./red tee.png" alt="Product 2">
+                <h3><a href="product-details.html?product=2" style="text-decoration: none; color: inherit;">Red Melon</a></h3>
+                <p>$29.99</p>
+                <button type="button">Add to Cart</button>
+            </div>
+            
+        </section>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 LUXO Shopping All rights reserved</p>
+    </footer>
+
+    <div class="account-panel" id="accountPanel">
+        <header>
+            <h2>My Account</h2>
+        </header>
+        <div class="content">
+            <p>Welcome to your account! Here you can manage your orders, view your details, and update preferences.</p>
+            <button class="close-btn" onclick="toggleAccountPanel()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+        document.querySelectorAll('.product button').forEach((button, index) => {
+            button.addEventListener('click', () => {
+                const productName = document.querySelectorAll('.product h3 a')[index].innerText;
+                const productPrice = document.querySelectorAll('.product p')[index].innerText;
+                cart.push({ name: productName, price: productPrice });
+                localStorage.setItem('cart', JSON.stringify(cart));
+                alert(`${productName} added to cart!`);
+            });
+        });
+
+        function toggleAccountPanel() {
+            const panel = document.getElementById('accountPanel');
+            panel.classList.toggle('open');
+        }
+    </script>
+</body>
+</html>
